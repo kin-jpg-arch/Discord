@@ -10,7 +10,10 @@
     {
       "src": "/api/send",
       "dest": "api/send.py"
+    },
+    {
+      "src": "/",
+      "dest": "/index.html"
     }
   ]
 }
-
