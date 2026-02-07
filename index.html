@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>디스코드 웹훅 센더</title>
+
+<style>
+body{
+  margin:0;
+  background:#0f172a;
+  color:white;
+  font-family:Arial;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.box{
+  background:#1e293b;
+  padding:30px;
+  border-radius:16px;
+  width:340px;
+  box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+input,textarea{
+  width:100%;
+  margin-bottom:10px;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  background:#0f172a;
+  color:white;
+}
+textarea{height:90px;resize:none;}
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:#5865F2;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>디스코드 웹훅 센더</h2>
+
+<input id="webhook" placeholder="웹훅 URL">
+<input id="username" placeholder="웹훅 이름">
+<textarea id="content" placeholder="메시지"></textarea>
+
+<input id="image" placeholder="이미지 URL">
+
+<input id="embed_title" placeholder="임베드 제목">
+<textarea id="embed_desc" placeholder="임베드 설명"></textarea>
+
+<button onclick="sendWebhook()">보내기</button>
+<p id="status"></p>
+</div>
+
+<script>
+async function sendWebhook(){
+  const data={
+    webhook:document.getElementById('webhook').value,
+    username:document.getElementById('username').value,
+    content:document.getElementById('content').value,
+    image:document.getElementById('image').value,
+    embed_title:document.getElementById('embed_title').value,
+    embed_desc:document.getElementById('embed_desc').value
+  }
+
+  const res=await fetch('/api/send',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data)
+  })
+
+  document.getElementById('status').innerText=
+    res.ok?'전송 완료':'전송 실패'
+}
+</script>
+
+</body>
+</html>
